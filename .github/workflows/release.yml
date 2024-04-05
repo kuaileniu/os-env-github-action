@@ -1,0 +1,27 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  release:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-20.04, windows-latest]
+    runs-on: ${{ matrix.platform }}
+    env:
+        pwd: ${{ secrets.PWD }}  
+    steps:
+      - name: Set environment variable
+      - uses: actions/checkout@v4
+ 
+      - name: Display environment variable
+        run: |
+            go run main.go
+            ls 
+      
